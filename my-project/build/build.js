@@ -3,11 +3,20 @@ require('./check-versions')()
 require('shelljs/global')
 env.NODE_ENV = 'production'
 
+// var path = require('path')
+// var config = require('../config')
+// var ora = require('ora')
+// var webpack = require('webpack')
+// var webpackConfig = require('./webpack.prod.conf')
+
+
 var path = require('path')
-var config = require('../config')
 var ora = require('ora')
 var webpack = require('webpack')
-var webpackConfig = require('./webpack.prod.conf')
+var config = require('../config')
+var mdName = process.argv[2] || 'prod'
+var webpackConfig =  require('./webpack.' + (mdName === 'prod' ? 'prod.conf' : 'docs.conf' ) )
+
 
 console.log(
   '  Tip:\n' +
@@ -18,10 +27,10 @@ console.log(
 var spinner = ora('building for production...')
 spinner.start()
 
-var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
-rm('-rf', assetsPath)
-mkdir('-p', assetsPath)
-cp('-R', 'static/*', assetsPath)
+// var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
+// rm('-rf', assetsPath)
+// mkdir('-p', assetsPath)
+// cp('-R', 'static/*', assetsPath)
 
 webpack(webpackConfig, function (err, stats) {
   spinner.stop()
